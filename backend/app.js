@@ -1,12 +1,12 @@
-import * as path from "path";
-import express from "express"
+import express from "express";
 import connectDB from "./config/db.js";
-import dotenv from "dotenv"
-import auth from "./routes/auth.js"
-import account from "./routes/account.js"
-import people from "./routes/people.js"
+import dotenv from "dotenv";
+import auth from "./routes/auth.js";
+import account from "./routes/account.js";
+import people from "./routes/people.js";
 import cors from "cors";
 
+import * as path from "path";
 dotenv.config({ path: "./config/config.env" });
 // const __dirname = path.resolve()
 

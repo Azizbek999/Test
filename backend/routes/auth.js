@@ -36,10 +36,10 @@ router.post("/register", async (req, res) => {
   });
   try {
     const savedUser = await newUser.save();
-    res.status(201).json(savedUser);
+    return res.status(201).json(savedUser);
     console.log(savedUser);
   } catch (err) {
-    res.status(404).json(err);
+    return res.status(404).json(err);
   }
 });
 
@@ -68,22 +68,26 @@ router.post("/login", async (req, res) => {
         );
         const { password, ...others } = user._doc;
 
-        res.status(200).json({ ...others, accessToken });
+        return res.status(200).json({ ...others, accessToken });
       } else {
-        res.status(401).json("Wrong password");
+        return res.status(401).json("Wrong password");
       }
     } else {
-      res.status(401).json("Wrong User Name");
+      return res.status(401).json("Wrong User Name");
     }
   } catch (err) {
-    res.status(500).json(err);
+    return res.status(500).json(err);
   }
 });
 
-router.post("/login", async (req, res) => {
-  try {
-    jwt.destroy(token);
-  } catch (err) {}
+// Deauthenticate - log out
+// Delete refresh token
+router.delete("/login", (req, res) => {
+  const refreshToken = req.header("x-auth-token");
+
+  refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
+  return res.sendStatus(204);
 });
+
 
 export default router;

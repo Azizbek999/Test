@@ -1,11 +1,11 @@
 import express from "express";
 import User from "../models/User.js";
-import { verifyTokenAndAuthorization } from "./verifyToken.js";
+import authToken from "../middleware/authenticateToken.js";
 
 const router = express.Router();
 
 // Get User
-router.get("/find/:id", verifyTokenAndAuthorization, async (req, res) => {
+router.get("/find/:id", authToken, async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
 

@@ -80,10 +80,14 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.post("/login", async (req, res) => {
-  try {
-    jwt.destroy(token);
-  } catch (err) {}
+// Deauthenticate - log out
+// Delete refresh token
+router.delete("/login", (req, res) => {
+  const refreshToken = req.header("x-auth-token");
+
+  refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
+  res.sendStatus(204);
 });
+
 
 export default router;
